@@ -16,8 +16,25 @@ struct ContentView: View {
     // `some` keyword adds a restriction: it must always be the _same_ kind of view being returned
     var body: some View {
         
-        // Create a text view using "Hello World" string
-        Text("Hello World")
+        NavigationView {
+            // Create a basic form
+            Form {
+                // When grouping, 10 children per parent
+                //Group {
+                Section {
+                    // Create a text view using "Hello World" string
+                    Text("Hello World")
+
+                }
+            }
+            // Attach a modifier
+            // Similar to regular methods, but always returns a new instance
+            // of whatever you use them on
+            // Default: Large Title
+            //.navigationBarTitle(Text("SwiftUI"))
+            //.navigationBarTitle("SwiftUI", displayMode: .inline)
+            .navigationBarTitle("SwiftUI")
+        }
     }
 }
 

@@ -16,6 +16,29 @@ struct ContentView: View {
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
+    var totalPerPerson: Double {
+        // Add 2 to numberOfPeople b/c it has range 2-100, but it counts from 0
+        let peopleCount = Double(numberOfPeople + 2)
+        
+        // Get value of tip percentage from the array
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        
+        // Attempt to convert checkAmount to a Double, but if it fails, use 0 instead
+        let orderAmount = Double(checkAmount) ?? 0
+        
+        // Calculate tip
+        let tipValue = orderAmount / 100 * tipSelection
+        
+        // Calculate grand total of check
+        let grandTotal = orderAmount + tipValue
+        
+        // Calculate amount per person
+        let amountPerPerson = grandTotal / peopleCount
+        
+        print(amountPerPerson)
+        return amountPerPerson
+    }
+    
     var body: some View {
         
         NavigationView {
@@ -42,7 +65,7 @@ struct ContentView: View {
                 }
             
                 Section {
-                    Text("$\(checkAmount)")
+                    Text("$\(totalPerPerson, specifier: "%.2f")")
                 }
             }
             .navigationBarTitle("WeSplit")

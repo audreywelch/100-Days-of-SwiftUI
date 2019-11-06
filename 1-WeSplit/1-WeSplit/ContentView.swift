@@ -13,16 +13,27 @@ struct ContentView: View {
     
     // Property Wrapper: special attribute to place before our properties that allows us
     // to change a value even though our view is a struct
-    @State private var tapCount = 0
+    // @State private var tapCount = 0
+    @State private var name = ""
     
     // Define a new computed property called `body` which has the type `some View`
     // Meaning it will return something that conforms to the View protocol
     // `some` keyword adds a restriction: it must always be the _same_ kind of view being returned
     var body: some View {
         
-        Button("Tap Count: \(tapCount)") {
-            self.tapCount += 1
+        Form {
+            
+            // Two-way binding: binds the text field so that it shows the value of our property
+            // but also binds it so that any changes to the text field also update the property
+            // Mark two-way bindings with a dollar sign, telling Swift to read the value of
+            // the property, but also write it back as any changes happen
+            TextField("Enter your name", text: $name)
+            Text("Your name is \(name)")
         }
+        
+//        Button("Tap Count: \(tapCount)") {
+//            self.tapCount += 1
+//        }
         
 //        NavigationView {
 //            // Create a basic form

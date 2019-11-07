@@ -16,6 +16,21 @@ struct ContentView: View {
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
+    var grandTotal: Double {
+        
+        // Get value of tip percentage from the array
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        
+        // Attempt to convert checkAmount to a Double, but if it fails, use 0 instead
+        let orderAmount = Double(checkAmount) ?? 0
+    
+        // Calculate tip
+        let tipValue = orderAmount / 100 * tipSelection
+        
+        return orderAmount + tipValue
+    
+    }
+    
     var totalPerPerson: Double {
         // Add 2 to numberOfPeople b/c it has range 2-100, but it counts from 0
         let peopleCount = Double(numberOfPeople + 2)
@@ -47,7 +62,7 @@ struct ContentView: View {
                 Section {
                     TextField("Amount", text: $checkAmount)
                         // Add modifier of a keyboard type that allows for numbers and decimals
-                        .keyboardType(.decimalPad)
+                        //.keyboardType(.decimalPad)
                 
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2 ..< 100) {
@@ -63,8 +78,12 @@ struct ContentView: View {
                         }
                     }.pickerStyle(SegmentedPickerStyle())
                 }
+                
+                Section(header: Text("Total check amount")) {
+                    Text("$\(grandTotal, specifier: "%.2f")")
+                }
             
-                Section {
+                Section(header: Text("Amount per person")) {
                     Text("$\(totalPerPerson, specifier: "%.2f")")
                 }
             }

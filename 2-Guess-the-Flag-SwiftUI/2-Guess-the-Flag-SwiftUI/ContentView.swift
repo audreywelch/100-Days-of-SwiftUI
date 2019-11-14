@@ -41,10 +41,19 @@ struct ContentView: View {
         // ZStack(alignment: .top) {
         ZStack {
             // Color is a view in its own right, so it automatically takes up all the space available
-            Color.red.edgesIgnoringSafeArea(.all)
+            //Color.red.edgesIgnoringSafeArea(.all)
             
             // or we can give it a frame
             //Color.red.frame(width: 200, height: 200)
+            
+            // Goes in one direction, so provide a start and end point
+            //LinearGradient(gradient: Gradient(colors: [.white, .black]), startPoint: .top, endPoint: .bottom)
+            
+            // Moves outward in a circle shape
+            //RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 20, endRadius: 200)
+            
+            // Cycles through a range of colors in a single gradient, centered on the middle of the gradient
+            AngularGradient(gradient: Gradient(colors: [.red, .yellow, .green, .blue, .purple, .red]), center: .center)
             
             Text("Your content")
         }

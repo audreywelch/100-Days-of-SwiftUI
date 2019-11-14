@@ -22,6 +22,9 @@ struct ContentView: View {
     // Property to store the title that will be shown inside the alert
     @State private var scoreTitle = ""
     
+    // Property to store the message that will be shown inside the alert
+    @State private var scoreMessage = ""
+    
     // Property to store the user's score
     @State private var score = 0
     
@@ -78,7 +81,7 @@ struct ContentView: View {
         // Show the title we have set in scoreTitle
         // Have a dismiss button that calls askQuestion() when tapped
         .alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text("Your score is \(score)"), dismissButton: .default(Text("Continue")) {
+            Alert(title: Text(scoreTitle), message: Text(scoreMessage), dismissButton: .default(Text("Continue")) {
                 self.askQuestion()
                 })
         }
@@ -92,8 +95,11 @@ struct ContentView: View {
         if number == correctAnswer {
             scoreTitle = "Correct"
             score += 1
+            scoreMessage = "Your score is \(score)"
+            
         } else {
             scoreTitle = "Wrong"
+            scoreMessage = "That's the flag of \(countries[number])."
         }
         
         showingScore = true

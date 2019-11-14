@@ -22,6 +22,9 @@ struct ContentView: View {
     // Property to store the title that will be shown inside the alert
     @State private var scoreTitle = ""
     
+    // Property to store the user's score
+    @State private var score = 0
+    
     var body: some View {
         
         ZStack {
@@ -70,7 +73,7 @@ struct ContentView: View {
         // Show the title we have set in scoreTitle
         // Have a dismiss button that calls askQuestion() when tapped
         .alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text("Your score is ???"), dismissButton: .default(Text("Continue")) {
+            Alert(title: Text(scoreTitle), message: Text("Your score is \(score)"), dismissButton: .default(Text("Continue")) {
                 self.askQuestion()
                 })
         }
@@ -83,6 +86,7 @@ struct ContentView: View {
         
         if number == correctAnswer {
             scoreTitle = "Correct"
+            score += 1
         } else {
             scoreTitle = "Wrong"
         }

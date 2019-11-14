@@ -26,7 +26,8 @@ struct ContentView: View {
         
         ZStack {
             
-            Color.blue.edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 30) {
                 
@@ -35,6 +36,8 @@ struct ContentView: View {
                     Text("Tap the flag of")
                         .foregroundColor(.white)
                     Text(countries[correctAnswer])
+                        .font(.largeTitle) // largest built-in font size, automatically scales up or down
+                        .fontWeight(.black) // makes text extra bold
                         .foregroundColor(.white)
                 }
                 
@@ -44,9 +47,18 @@ struct ContentView: View {
                         self.flagTapped(number)
                     }) {
                         Image(self.countries[number])
-                            
+                        
                             // Render the original image pixels rather than try to recolor them as a button
                             .renderingMode(.original)
+                            
+                            // Ensures corners of shortest edges are fully rounded, while longest edges remain straight
+                            .clipShape(Capsule())
+                            
+                            // Adds another view over the flag, which is a capsule that has a black stroke around its edge
+                            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+                            
+                            // Adds a shadow effect around each flag
+                            .shadow(color: .black, radius: 2)
                     }
                 }
                 

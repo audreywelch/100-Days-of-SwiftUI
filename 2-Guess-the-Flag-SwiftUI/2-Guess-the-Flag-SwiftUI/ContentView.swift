@@ -11,10 +11,16 @@ import SwiftUI
 struct ContentView: View {
     
     // Game data
-    var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"]
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     
     // Integer sstoring which country image is correct
-    var correctAnswer = Int.random(in: 0...2)
+    @State private var correctAnswer = Int.random(in: 0...2)
+    
+    // Property to store whether the alert is showing or not
+    @State private var showingScore = false
+    
+    // Property to store the title that will be shown inside the alert
+    @State private var scoreTitle = ""
     
     var body: some View {
         
@@ -35,6 +41,7 @@ struct ContentView: View {
                 ForEach(0 ..< 3) { number in
                     Button(action: {
                         // flag was tapped
+                        self.flagTapped(number)
                     }) {
                         Image(self.countries[number])
                             
@@ -46,6 +53,35 @@ struct ContentView: View {
                 Spacer()
             }
         }
+            
+        // Use the alert() modifier so the alert gets presented when showingScore is true
+        // Show the title we have set in scoreTitle
+        // Have a dismiss button that calls askQuestion() when tapped
+        .alert(isPresented: $showingScore) {
+            Alert(title: Text(scoreTitle), message: Text("Your score is ???"), dismissButton: .default(Text("Continue")) {
+                self.askQuestion()
+                })
+        }
+    }
+    
+    // Accepts the number of the button that was tapped,
+    // compares against he correct answer,
+    // sets those two new properties in order to show a meaningful alert
+    func flagTapped(_ number: Int) {
+        
+        if number == correctAnswer {
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
+        }
+        
+        showingScore = true
+    }
+    
+    // Reset the game
+    func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
     }
 }
 
